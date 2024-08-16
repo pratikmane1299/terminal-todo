@@ -19,7 +19,12 @@ var listCmd = &cobra.Command{
 
 		defer todoDb.Db.Close()
 
-		todos, err := todoDb.GetAllTodos()
+		status, err := cmd.Flags().GetString("status")
+		if err != nil {
+			return nil
+		}
+
+		todos, err := todoDb.GetAllTodos(status)
 		if err != nil {
 			return fmt.Errorf("unable to fetch todos :%w", err)
 		}

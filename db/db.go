@@ -35,9 +35,19 @@ func (db *DB) createTable() error {
 	return err
 }
 
-func (db *DB) GetAllTodos() ([]Todo, error) {
+func (db *DB) GetAllTodos(completed string) ([]Todo, error) {
 	var todos []Todo
-	rows, err := db.Db.Query("Select * from todos")
+
+	var filterQuery = ""
+
+	switch completed {
+	case "pending":
+		filterQuery = " where completed = false"
+	case "completed":
+		filterQuery = " where completed = true"
+	}
+
+	rows, err := db.Db.Query("Select * from todos" + filterQuery)
 	if err != nil {
 		return todos, err
 	}

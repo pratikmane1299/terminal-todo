@@ -16,6 +16,8 @@ func Execute() error {
 }
 
 func init() {
+	listCmd.Flags().StringP("status", "s", "", "filter todos by status completed/pending/all")
+
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(addTodoCmd)
 	rootCmd.AddCommand(deleteCmd)
